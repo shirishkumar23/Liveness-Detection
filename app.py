@@ -49,15 +49,14 @@ def main():
     return render_template('main_page.html', name=name)
 
 if __name__ == '__main__':
-    db.create_all()
+    # db.create_all()
 
-    # add users to database
 
-    # new_user = Users(username='jom_ariya', password='123456789', name='Ariya')
+    # new_user = Users(username='shirish', password='123456789', name='Shirish')
     # db.session.add(new_user)
 
-    # new_user_2 = Users(username='earth_ekaphat', password='123456789', name='Ekaphat')
-    # new_user_3 = Users(username='bonus_ekkawit', password='123456789', name='Ekkawit')
+    # new_user_2 = Users(username='shashwat', password='123456789', name='Shashwat')
+    # new_user_3 = Users(username='umair', password='123456789', name='Umair')
     # db.session.add(new_user_2)
     # db.session.add(new_user_3)
 

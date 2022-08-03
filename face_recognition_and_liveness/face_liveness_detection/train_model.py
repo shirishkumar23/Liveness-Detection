@@ -17,21 +17,22 @@ import cv2
 import os
 
 # construct the argument parser and parse the arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('-d', '--dataset', required=True,
-                    help='Path to input Dataset')
-parser.add_argument('-m', '--model', type=str, required=True,
-                    help='Path to output trained model')
-parser.add_argument('-l', '--le', type=str, required=True,
-                    help='Path to output Label Encoder')
-parser.add_argument('-p', '--plot', type=str, default='plot.png',
-                    help='Path to output loss/accuracy plot')
-args = vars(parser.parse_args())
+# parser = argparse.ArgumentParser()
+# parser.add_argument('-d', '--dataset', required=True,
+#                     help='Path to input Dataset')
+# parser.add_argument('-m', '--model', type=str, required=True,
+#                     help='Path to output trained model')
+# parser.add_argument('-l', '--le', type=str, required=True,
+#                     help='Path to output Label Encoder')
+# parser.add_argument('-p', '--plot', type=str, default='plot.png',
+#                     help='Path to output loss/accuracy plot')
+# args = vars(parser.parse_args())
 
 # get the list of images in out dataset directory
 # then, initialize the list of data and class of images
 print('[INFO] loading images...')
-imagePaths = list(paths.list_images(args['dataset'])) # get all image path from dataset path
+imagePaths = list(paths.list_images(".")) # get all image path from dataset path
+print(imagePaths)
 data = list()
 labels = list()
 
@@ -53,7 +54,10 @@ for imagePath in imagePaths:
 # convert to ndarray and do feature scaling
 # tf works best with ndarray and it's super fast and efficient!
 data = np.array(data, dtype='float') / 255.0
-
+data=data[2:]
+labels=labels[2:]
+labels = [s[0] for s in labels]
+print(labels)
 # encode the labels from (fake, real) to  (0,1)
 # and do one-hot encoding
 le = LabelEncoder()
@@ -67,6 +71,7 @@ labels = tf.keras.utils.to_categorical(labels, 2) # one-hot encoding
 # 80/20 gives a better result, so we go for it
 # Another thing to consider, since my dataset has only about 14 images of faces from card/solid image
 # so 80/20 has a higher chance that those images will be in training set rather than test set (and none on training set)
+print(data)
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.20, random_state=42)
 
 # construct the training image generator for data augmentation
@@ -83,7 +88,7 @@ aug = tf.keras.preprocessing.image.ImageDataGenerator(rotation_range=20,
 # define hyperparameters
 INIT_LR = 1e-4 # initial learning rate
 BATCH_SIZE = 4
-EPOCHS = 50
+EPOCHS = 200
 
 # we don't need early stopping here because we have a small dataset, there is no need to do so
 # initialize the optimizer and model
@@ -109,12 +114,12 @@ predictions = model.predict(x=X_test, batch_size=BATCH_SIZE)
 print(classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names=le.classes_))
 
 # save model to disk
-print(f"[INFO serializing network to '{args['model']}']")
-model.save(args['model'], save_format='h5')
+# print(f"[INFO serializing network to '{args['model']}']")
+#model.save(args['model'], save_format='h5')
 
 # save the label encoder to disk
-with open(args['le'], 'wb') as file:
-    file.write(pickle.dumps(le))
+# with open(args['le'], 'wb') as file:
+#     file.write(pickle.dumps(le))
     
 # plot training loss and accuract and save
 plt.style.use('ggplot')
@@ -127,4 +132,5 @@ plt.title('Training Loss and Accuracy on Dataset')
 plt.xlabel('Epoch #')
 plt.ylabel('Loss/Accuracy')
 plt.legend(loc='lower left')
-plt.savefig(args['plot'])
+# plt.show()
+plt.savefig("image.png")

@@ -1,0 +1,21 @@
+ Volume in drive C is Acer
+ Volume Serial Number is 565E-F006
+
+ Directory of C:\Users\shiri\EndSemProject\final_project\apple\face-recognition-with-liveness-web-login
+
+29-06-2022  14:11    <DIR>          .
+29-06-2022  14:11    <DIR>          ..
+28-06-2022  18:57    <DIR>          .idea
+29-06-2022  01:39             2,663 app.py
+28-06-2022  18:57    <DIR>          assets
+29-06-2022  01:38            12,288 database.sqlite
+28-06-2022  18:24         2,960,298 dlib-19.22.99-cp310-cp310-win_amd64.whl
+28-06-2022  18:57    <DIR>          face_recognition_and_liveness
+29-06-2022  14:11                 0 print.txt
+28-06-2022  18:57            18,205 README.md
+28-06-2022  18:57               209 requirements.txt
+28-06-2022  18:57    <DIR>          static
+28-06-2022  18:57    <DIR>          templates
+29-06-2022  01:39    <DIR>          __pycache__
+               6 File(s)      2,993,663 bytes
+               8 Dir(s)  41,587,494,912 bytes free
